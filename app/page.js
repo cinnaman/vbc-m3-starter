@@ -250,51 +250,53 @@ export default function HomePage() {
         {requests.length === 0 ? (
           <p className="empty-state">No requests to show yet.</p>
         ) : (
-          <table className="requests-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Requester</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th>Priority</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((request) => (
-                <tr key={request.id}>
-                  <td>{formatDate(request.created_at)}</td>
-                  <td>{request.requester_name}</td>
-                  <td>{request.location}</td>
-                  <td>{truncate(request.description)}</td>
-                  <td>
-                    <span
-                      className={
-                        "badge badge-" + String(request.priority).toLowerCase()
-                      }
-                    >
-                      {request.priority}
-                    </span>
-                  </td>
-                  <td>
-                    <select
-                      value={request.status}
-                      onChange={(event) =>
-                        handleStatusChange(request.id, event.target.value)
-                      }
-                    >
-                      {STATUSES.map((status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
+          <div className="table-scroll">
+            <table className="requests-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Requester</th>
+                  <th>Location</th>
+                  <th>Description</th>
+                  <th>Priority</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {requests.map((request) => (
+                  <tr key={request.id}>
+                    <td>{formatDate(request.created_at)}</td>
+                    <td>{request.requester_name}</td>
+                    <td>{request.location}</td>
+                    <td>{truncate(request.description)}</td>
+                    <td>
+                      <span
+                        className={
+                          "badge badge-" + String(request.priority).toLowerCase()
+                        }
+                      >
+                        {request.priority}
+                      </span>
+                    </td>
+                    <td>
+                      <select
+                        value={request.status}
+                        onChange={(event) =>
+                          handleStatusChange(request.id, event.target.value)
+                        }
+                      >
+                        {STATUSES.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
     </main>

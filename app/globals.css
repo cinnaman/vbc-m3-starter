@@ -216,8 +216,16 @@ button[type="submit"]:disabled {
   padding: 16px 0;
 }
 
+/* Lets the table scroll sideways inside its card on narrow screens
+   instead of spilling out of the container. */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .requests-table {
   width: 100%;
+  min-width: 640px; /* below this, scroll rather than crush the columns */
   border-collapse: collapse;
 }
 
@@ -227,6 +235,23 @@ button[type="submit"]:disabled {
   padding: 10px 8px;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
+  /* Break very long unbroken text (URLs, codes, "yyyy…") so it wraps inside the cell. */
+  overflow-wrap: anywhere;
+}
+
+/* Desktop: keep Location (3rd column) and Priority (5th column) on one line,
+   headers and values. Their values come from fixed short lists ("Minneapolis",
+   "Medium", ...), so they never get long; the Description column gives up the space.
+   Phones (640px and below) are left alone and may wrap.
+   NOTE: tied to column order in page.js — update if columns are reordered. */
+@media (min-width: 641px) {
+  .requests-table th:nth-child(3),
+  .requests-table td:nth-child(3),
+  .requests-table th:nth-child(5),
+  .requests-table td:nth-child(5) {
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
 }
 
 .requests-table th {
